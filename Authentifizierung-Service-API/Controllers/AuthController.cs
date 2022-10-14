@@ -50,11 +50,11 @@ namespace Authentifizierung_Service_API.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(User userRequest)
+        public IActionResult Login(UserRequest userRequest)
         {
             var dbUser = _context.Users.Find(userRequest.Username);
 
-            //CreatePasswordHash(userRequest.PasswordHash, out byte[] requestHash, out byte[] requestSalt);
+            byte[] userRequestHash = System.Text.Encoding.UTF8.GetBytes(userRequest.PasswordHash);
 
             if (dbUser == null)
             {
@@ -66,7 +66,7 @@ namespace Authentifizierung_Service_API.Controllers
                 return BadRequest("User not found.");
             }
 
-            if (!VerifyPasswordHash(userRequest.PasswordHash, dbUser.PasswordHash))
+            if (!VerifyPasswordHash(userRequestHash, dbUser.PasswordHash))
             {
                 return BadRequest("Wrong password.");
             }
