@@ -6,8 +6,6 @@
         
         public string PasswordHash { get; set; }
 
-        public string PasswordSalt { get; set; }
-
         public int FahrtenbuchWrite { get; set; }
 
         public int AdressenWrite { get; set; }
